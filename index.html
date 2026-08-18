@@ -1,117 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base target="_top">
-<style>
-:root{--bg:#f4f6fb;--card:#fff;--text:#172033;--muted:#718096;--line:#e6eaf0;--primary:#4f46e5;--dark:#111827;--danger:#dc2626}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-button,input,select,textarea{font:inherit}.hidden{display:none!important}
-.login{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#111827,#4f46e5)}
-.loginbox{width:min(420px,100%);background:#fff;border-radius:18px;padding:32px;box-shadow:0 20px 60px #0004}.loginbox h1{margin:0 0 8px}.loginbox p{color:var(--muted)}
-.loginbox label,.form label{font-size:12px;font-weight:700;display:block;margin:14px 0 6px}
-.loginbox input,.form input,.form select,.form textarea,.filters input,.filters select{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:#fff}
-.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:var(--primary);color:#fff}.light{background:#fff;border:1px solid var(--line)}.danger{background:#fee2e2;color:#991b1b}
-.loginbox .btn{width:100%;margin-top:18px}.error{color:#b91c1c;margin-top:12px;font-size:13px}
-.sidebar{position:fixed;inset:0 auto 0 0;width:235px;background:var(--dark);color:#fff;padding:22px 15px;z-index:3}.logo{font-weight:800;font-size:20px;padding:10px 12px 30px}.logo span{color:#818cf8}
-.nav{padding:11px 13px;border-radius:9px;margin:5px 0;color:#cbd5e1;cursor:pointer}.nav:hover,.nav.active{background:#252d3e;color:#fff}
-.main{margin-left:235px;padding:28px;max-width:1600px}.top{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:22px}.top h1{margin:0 0 5px}.muted{color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:19px;box-shadow:0 5px 20px #0f172a08}.label{font-size:12px;color:var(--muted)}.metric{font-size:27px;font-weight:800;margin:8px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}.chart{height:300px;display:flex;align-items:end;gap:10px;padding:25px 10px 30px;border-top:1px solid var(--line);overflow:hidden}
-.bar{flex:1;min-width:35px;display:flex;flex-direction:column;justify-content:end;height:100%;align-items:center}.barfill{width:80%;max-width:65px;border-radius:7px 7px 2px 2px;background:var(--primary);min-height:3px}.bar small{margin-top:7px;color:var(--muted);white-space:nowrap}.bar strong{font-size:11px;margin-bottom:5px}
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.filters input,.filters select{width:auto;min-width:150px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:11px;border-bottom:1px solid var(--line);font-size:13px;text-align:left}th{color:var(--muted);background:#fafafa}.badge{background:#eef2ff;color:#4338ca;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:700}
-.modal{display:none;position:fixed;inset:0;background:#0f172a88;z-index:10;align-items:center;justify-content:center}.modal.show{display:flex}.modalbox{width:min(700px,94vw);background:#fff;border-radius:16px;padding:24px;max-height:90vh;overflow:auto}.form{display:grid;grid-template-columns:1fr 1fr;gap:5px 14px}.full{grid-column:1/-1}.form textarea{min-height:90px}
-@media(max-width:1150px){.cards{grid-template-columns:repeat(3,1fr)}}@media(max-width:850px){.sidebar{width:68px}.logo{font-size:0}.logo span{font-size:19px}.nav{font-size:0;text-align:center}.main{margin-left:68px;padding:17px}.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:550px){.cards{grid-template-columns:1fr}.top{align-items:flex-start}.form{grid-template-columns:1fr}.full{grid-column:auto}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laporan Media Sosial</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f4f7fe; margin: 0; padding: 20px; color: #2b3674; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    h1 { margin-bottom: 20px; }
+    
+    /* Ringkasan Kartu */
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card h3 { margin: 0 0 10px 0; font-size: 14px; color: #a3edd9; color: #7090b0; }
+    .card .value { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+    .card .change { font-size: 12px; font-weight: 600; color: #05cd99; }
+    
+    /* Tabel Performa */
+    .table-container { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 12px 15px; border-bottom: 1px solid #e9edf7; }
+    th { font-size: 13px; color: #a3edd9; color: #7090b0; text-transform: uppercase; }
+  </style>
 </head>
 <body>
-<div id="loginPage" class="login">
-  <div class="loginbox">
-    <h1>Social Admin</h1><p>Login administrator untuk membuka dashboard.</p>
-    <label>Username</label><input id="user" autocomplete="username" value="admin">
-    <label>Password</label><input id="pass" type="password" autocomplete="current-password">
-    <button class="btn primary" onclick="doLogin()">Masuk</button>
-    <div id="loginError" class="error"></div>
-    <small class="muted">Login awal: admin / admin123. Segera ganti di Apps Script.</small>
-  </div>
-</div>
+  <div class="container">
+    <h1>Laporan Performa Media Sosial</h1>
+    
+    <!-- Metric Cards -->
+    <div class="grid-cards">
+      <div class="card">
+        <h3>TOTAL FOLLOWERS</h3>
+        <div class="value">124,500</div>
+        <div class="change">+12% bulan ini</div>
+      </div>
+      <div class="card">
+        <h3>TOTAL ENGAGEMENT</h3>
+        <div class="value">45,210</div>
+        <div class="change">+8% bulan ini</div>
+      </div>
+      <div class="card">
+        <h3>TOTAL IMPRESSIONS</h3>
+        <div class="value">890,000</div>
+        <div class="change">+15% bulan ini</div>
+      </div>
+    </div>
 
-<div id="app" class="hidden">
-<aside class="sidebar">
-  <div class="logo">SOCIAL<span>ADMIN</span></div>
-  <div class="nav active">▦ &nbsp; Dashboard</div>
-  <div class="nav" onclick="openModal()">＋ &nbsp; Laporan Baru</div>
-  <div class="nav" onclick="exportCSV()">⇩ &nbsp; Export CSV</div>
-  <div class="nav" onclick="location.reload()">↻ &nbsp; Refresh</div>
-  <div class="nav" onclick="doLogout()">⇥ &nbsp; Keluar</div>
-</aside>
-
-<main class="main">
-  <div class="top"><div><h1>Dashboard Sosial Media</h1><div class="muted">Monitoring laporan harian dan bulanan</div></div>
-  <div><button class="btn light" onclick="exportCSV()">Export CSV</button> <button class="btn primary" onclick="openModal()">+ Tambah</button></div></div>
-
-  <div class="cards">
-    <div class="card"><div class="label">Jumlah Akun</div><div class="metric" id="mAccounts">0</div></div>
-    <div class="card"><div class="label">Postingan</div><div class="metric" id="mPosts">0</div></div>
-    <div class="card"><div class="label">Like</div><div class="metric" id="mLike">0</div></div>
-    <div class="card"><div class="label">Komentar</div><div class="metric" id="mComment">0</div></div>
-    <div class="card"><div class="label">Views</div><div class="metric" id="mViews">0</div></div>
-  </div>
-
-  <div class="grid">
-    <div class="card"><h3>Laporan Harian</h3><div id="dailyChart" class="chart"></div></div>
-    <div class="card"><h3>Postingan per Platform</h3><div id="platformChart" class="chart"></div></div>
-  </div>
-
-  <div class="card" style="margin-top:15px">
-    <h3>Filter Laporan</h3>
-    <div class="filters">
-      <input type="date" id="from" onchange="renderAll()"><input type="date" id="to" onchange="renderAll()">
-      <select id="platformFilter" onchange="renderAll()"><option value="">Semua Platform</option></select>
-      <input id="search" placeholder="Cari akun..." oninput="renderAll()">
-      <button class="btn light" onclick="clearFilters()">Reset</button>
+    <!-- Table -->
+    <div class="table-container">
+      <h2>Performa Per Platform</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Followers</th>
+            <th>Post Disukai</th>
+            <th>Komentar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Instagram</strong></td>
+            <td>65,400</td>
+            <td>28,100</td>
+            <td>3,400</td>
+          </tr>
+          <tr>
+            <td><strong>TikTok</strong></td>
+            <td>42,100</td>
+            <td>14,200</td>
+            <td>1,900</td>
+          </tr>
+          <tr>
+            <td><strong>YouTube</strong></td>
+            <td>17,000</td>
+            <td>2,910</td>
+            <td>420</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <div class="card" style="margin-top:15px">
-    <div style="display:flex;justify-content:space-between;align-items:center"><h3>Data Laporan</h3><span id="count" class="muted"></span></div>
-    <div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Platform</th><th>Akun</th><th>Post</th><th>Like</th><th>Komentar</th><th>Share</th><th>Views</th><th>Link</th><th>Aksi</th></tr></thead><tbody id="tbody"></tbody></table></div>
-  </div>
-</main>
-</div>
-
-<div id="modal" class="modal"><div class="modalbox">
-  <div style="display:flex;justify-content:space-between"><h2>Laporan Baru</h2><button class="btn light" onclick="closeModal()">Tutup</button></div>
-  <form id="form" class="form" onsubmit="save(event)">
-    <div><label>Tanggal</label><input id="tanggal" type="date" required></div>
-    <div><label>Platform</label><select id="platform" required><option value="">Pilih</option><option>Instagram</option><option>TikTok</option><option>Facebook</option><option>X</option><option>YouTube</option><option>Threads</option><option>Lainnya</option></select></div>
-    <div><label>Nama Akun</label><input id="akun" required></div><div><label>Link</label><input id="link" type="url"></div>
-    <div><label>Postingan</label><input id="postingan" type="number" min="0" value="0"></div><div><label>Like</label><input id="like" type="number" min="0" value="0"></div>
-    <div><label>Komentar</label><input id="komentar" type="number" min="0" value="0"></div><div><label>Share</label><input id="share" type="number" min="0" value="0"></div>
-    <div><label>Views</label><input id="views" type="number" min="0" value="0"></div><div class="full"><label>Keterangan</label><textarea id="keterangan"></textarea></div>
-    <div class="full"><button id="saveBtn" class="btn primary">Simpan</button></div>
-  </form>
-</div></div>
-
-<script>
-let token="", rows=[];
-const $=id=>document.getElementById(id), fmt=n=>new Intl.NumberFormat('id-ID').format(n||0);
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-function doLogin(){ $('loginError').textContent='Memeriksa...'; google.script.run.withSuccessHandler(r=>{if(!r.success){$('loginError').textContent=r.message;return}token=r.token;$('loginPage').classList.add('hidden');$('app').classList.remove('hidden');load();}).login($('user').value,$('pass').value);}
-function doLogout(){google.script.run.logout(token);location.reload();}
-function load(){google.script.run.withSuccessHandler(d=>{rows=d||[];fillPlatforms();renderAll();}).withFailureHandler(e=>{alert(e.message);location.reload()}).ambilLaporan(token);}
-function fillPlatforms(){let s=$('platformFilter'),v=s.value;s.innerHTML='<option value="">Semua Platform</option>'+[...new Set(rows.map(x=>x.platform))].sort().map(x=>`<option>${esc(x)}</option>`).join('');s.value=v;}
-function filtered(){let f=$('from').value,t=$('to').value,p=$('platformFilter').value,q=$('search').value.toLowerCase();return rows.filter(x=>(!f||x.tanggal>=f)&&(!t||x.tanggal<=t)&&(!p||x.platform===p)&&(!q||x.akun.toLowerCase().includes(q)));}
-function renderAll(){let d=filtered();$('count').textContent=d.length+' laporan';let accounts=new Set(d.map(x=>x.akun));$('mAccounts').textContent=fmt(accounts.size);$('mPosts').textContent=fmt(sum(d,'postingan'));$('mLike').textContent=fmt(sum(d,'like'));$('mComment').textContent=fmt(sum(d,'komentar'));$('mViews').textContent=fmt(sum(d,'views'));renderTable(d);drawDaily(d);drawPlatform(d);}
-function sum(a,k){return a.reduce((n,x)=>n+(Number(x[k])||0),0)}
-function renderTable(d){$('tbody').innerHTML=d.length?d.map(x=>`<tr><td>${esc(x.tanggal)}</td><td><span class="badge">${esc(x.platform)}</span></td><td>${esc(x.akun)}</td><td>${fmt(x.postingan)}</td><td>${fmt(x.like)}</td><td>${fmt(x.komentar)}</td><td>${fmt(x.share)}</td><td>${fmt(x.views)}</td><td>${x.link?`<a href="${/^https?:\\/\\//i.test(x.link)?esc(x.link):'#'}" target="_blank">Buka</a>`:'-'}</td><td><button class="btn danger" onclick="del('${x.id}')">Hapus</button></td></tr>`).join(''):'<tr><td colspan="10" class="muted">Tidak ada laporan.</td></tr>';}
-function bars(target,items){let max=Math.max(...items.map(x=>x.v),1);$(target).innerHTML=items.length?items.map(x=>`<div class="bar"><strong>${fmt(x.v)}</strong><div class="barfill" style="height:${Math.max(2,x.v/max*210)}px"></div><small>${esc(x.k)}</small></div>`).join(''):'<div class="muted">Belum ada data</div>';}
-function drawPlatform(d){let m={};d.forEach(x=>m[x.platform]=(m[x.platform]||0)+x.postingan);bars('platformChart',Object.entries(m).map(([k,v])=>({k,v})).sort((a,b)=>b.v-a.v));}
-function drawDaily(d){let m={};d.forEach(x=>m[x.tanggal]=(m[x.tanggal]||0)+x.postingan);let a=Object.entries(m).sort().slice(-14).map(([k,v])=>({k:k.slice(5),v}));bars('dailyChart',a);}
-function openModal(){$('modal').classList.add('show');$('tanggal').value=new Date().toISOString().slice(0,10);}
-function closeModal(){$('modal').classList.remove('show');}
-function save(e){e.preventDefault();let b=$('saveBtn');b.disabled=true;b.textContent='Menyimpan...';let d={tanggal:$('tanggal').value,platform:$('platform').value,akun:$('akun').value,link:$('link').value,postingan:$('postingan').value,like:$('like').value,komentar:$('komentar').value,share:$('share').value,views:$('views').value,keterangan:$('keterangan').value};google.script.run.withSuccessHandler(r=>{alert(r.message);$('form').reset();closeModal();b.disabled=false;b.textContent='Simpan';load();}).withFailureHandler(e=>{alert(e.message);b.disabled=false;b.textContent='Simpan';}).simpanLaporan(token,d);}
-function del(id){if(!confirm('Hapus laporan ini?'))return;google.script.run.withSuccessHandler(()=>load()).withFailureHandler(e=>alert(e.message)).hapusLaporan(token,id);}
-function clearFilters(){$('from').value='';$('to').value='';$('platformFilter').value='';$('search').value='';renderAll();}
-function exportCSV(){let d=filtered();let header=['Tanggal','Platform','Akun','Link','Postingan','Like','Komentar','Share','Views','Keterangan'];let lines=[header,...d.map(x=>[x.tanggal,x.platform,x.akun,x.link,x.postingan,x.like,x.komentar,x.share,x.views,x.keterangan])].map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(','));let blob=new Blob(["\ufeff"+lines.join('\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='laporan-sosmed-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(a.href);}
-</script>
-</body></html>
+</body>
+</html>
