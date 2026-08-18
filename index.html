@@ -1,86 +1,97 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Media Sosial</title>
-  <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f4f7fe; margin: 0; padding: 20px; color: #2b3674; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    h1 { margin-bottom: 20px; }
-    
-    /* Ringkasan Kartu */
-    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
-    .card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .card h3 { margin: 0 0 10px 0; font-size: 14px; color: #a3edd9; color: #7090b0; }
-    .card .value { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-    .card .change { font-size: 12px; font-weight: 600; color: #05cd99; }
-    
-    /* Tabel Performa */
-    .table-container { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th, td { padding: 12px 15px; border-bottom: 1px solid #e9edf7; }
-    th { font-size: 13px; color: #a3edd9; color: #7090b0; text-transform: uppercase; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X (Twitter) Account Checker</title>
+    <style>
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: #000; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: #16181c; border: 1px solid #2f3336; border-radius: 16px; width: 100%; max-width: 480px; padding: 24px; }
+        h2 { font-size: 20px; margin-bottom: 20px; text-align: center; }
+        label { font-size: 13px; color: #71767b; display: block; margin-bottom: 6px; }
+        input { width: 100%; padding: 12px; margin-bottom: 16px; background: #000; border: 1px solid #333639; border-radius: 8px; color: #fff; font-size: 14px; }
+        input:focus { outline: none; border-color: #1d9bf0; }
+        button { width: 100%; padding: 12px; background: #fff; color: #000; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; font-size: 14px; }
+        button:hover { background: #e6e6e6; }
+        .result { margin-top: 20px; padding: 16px; border-radius: 8px; background: #000; display: none; }
+        .status-tag { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .active { background: #00ba7c22; color: #00ba7c; }
+        .suspended { background: #f4212e22; color: #f4212e; }
+        .notfound { background: #e7e9ea22; color: #e7e9ea; }
+        .verified-badge { color: #1d9bf0; margin-left: 4px; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Laporan Performa Media Sosial</h1>
-    
-    <!-- Metric Cards -->
-    <div class="grid-cards">
-      <div class="card">
-        <h3>TOTAL FOLLOWERS</h3>
-        <div class="value">124,500</div>
-        <div class="change">+12% bulan ini</div>
-      </div>
-      <div class="card">
-        <h3>TOTAL ENGAGEMENT</h3>
-        <div class="value">45,210</div>
-        <div class="change">+8% bulan ini</div>
-      </div>
-      <div class="card">
-        <h3>TOTAL IMPRESSIONS</h3>
-        <div class="value">890,000</div>
-        <div class="change">+15% bulan ini</div>
-      </div>
-    </div>
 
-    <!-- Table -->
-    <div class="table-container">
-      <h2>Performa Per Platform</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Platform</th>
-            <th>Followers</th>
-            <th>Post Disukai</th>
-            <th>Komentar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Instagram</strong></td>
-            <td>65,400</td>
-            <td>28,100</td>
-            <td>3,400</td>
-          </tr>
-          <tr>
-            <td><strong>TikTok</strong></td>
-            <td>42,100</td>
-            <td>14,200</td>
-            <td>1,900</td>
-          </tr>
-          <tr>
-            <td><strong>YouTube</strong></td>
-            <td>17,000</td>
-            <td>2,910</td>
-            <td>420</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="card">
+    <h2>X Account Checker</h2>
+    
+    <label for="token">Bearer Token (API X):</label>
+    <input type="password" id="token" placeholder="Masukkan Bearer Token X API">
+
+    <label for="username">Username (tanpa @):</label>
+    <input type="text" id="username" placeholder="contoh: elonmusk">
+
+    <button onclick="checkAccount()">Cek Status Akun</button>
+
+    <div id="result" class="result">
+        <p><strong>Username:</strong> <span id="resUsername"></span></p>
+        <p><strong>Status Akun:</strong> <span id="resStatus"></span></p>
+        <p><strong>Terverifikasi:</strong> <span id="resVerified"></span></p>
     </div>
-  </div>
+</div>
+
+<script>
+async function checkAccount() {
+    const username = document.getElementById('username').value.trim();
+    const token = document.getElementById('token').value.trim();
+    const resultDiv = document.getElementById('result');
+
+    if (!username || !token) {
+        alert("Harap isi Username dan Bearer Token!");
+        return;
+    }
+
+    resultDiv.style.display = "block";
+    document.getElementById('resUsername').innerText = "@" + username;
+    document.getElementById('resStatus').innerHTML = "Memeriksa...";
+    document.getElementById('resVerified').innerText = "-";
+
+    try {
+        // Menggunakan CORS Proxy agar request dari browser ke API X tidak terblokir
+        const proxyUrl = "https://corsproxy.io/?";
+        const apiUrl = `https://api.twitter.com/2/users/by/username/${username}?user.fields=verified,protected`;
+
+        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl), {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.errors && data.errors.length > 0) {
+            const err = data.errors[0];
+            if (err.title === "Forbidden" || err.detail.includes("suspended")) {
+                document.getElementById('resStatus').innerHTML = '<span class="status-tag suspended">SUSPENDED</span>';
+            } else if (err.title === "Not Found Error") {
+                document.getElementById('resStatus').innerHTML = '<span class="status-tag notfound">TIDAK DITEMUKAN / DELETED</span>';
+            } else {
+                document.getElementById('resStatus').innerText = err.detail || "Error";
+            }
+            document.getElementById('resVerified').innerText = "Tidak Ada Data";
+        } else if (data.data) {
+            document.getElementById('resStatus').innerHTML = '<span class="status-tag active">AKTIF (HIDUP)</span>';
+            const isVerified = data.data.verified ? "Ya (Centang Biru/Verif)" : "Tidak";
+            document.getElementById('resVerified').innerText = isVerified;
+        }
+    } catch (err) {
+        document.getElementById('resStatus').innerText = "Gagal terhubung ke API (CORS/Network error)";
+        console.error(err);
+    }
+}
+</script>
+
 </body>
 </html>
